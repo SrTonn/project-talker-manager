@@ -1,5 +1,9 @@
-const validation = require('./validation');
+const validationLogin = require('./validationLogin');
+const validationTalker = require('./validationTalker');
+const authToken = require('./authToken');
 
 module.exports = {
-  validation,
+  validationLogin,
+  validationTalker,
+  authToken,
 };
