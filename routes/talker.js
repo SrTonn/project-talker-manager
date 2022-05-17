@@ -4,6 +4,14 @@ const { authToken, validationTalker } = require('../middlewares');
 const routes = express.Router();
 const { readData, writeData } = require('../utils');
 
+routes.get('/search', authToken, (req, res, next) => {
+  const { q } = req.query;
+  console.log(q);
+  const filtered = readData().filter(({ name }) => name.includes(q));
+  res.status(200).json(filtered);
+  next();
+});
+
 routes.get('/', (_req, res, next) => {
   res.status(200).json(readData());
   next();
