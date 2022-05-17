@@ -34,4 +34,20 @@ routes.post('/', authToken, validationTalker, (req, res, next) => {
   next();
 });
 
+routes.put('/:id', authToken, validationTalker, (req, res, next) => {
+  const { body: newTalker } = req;
+  const { id } = req.params;
+  const data = readData();
+  const newData = data.filter((talker) => talker.id !== +id);
+
+  newTalker.id = +id;
+  newData.push(newTalker);
+  newData.sort((a, b) => a.id - b.id);
+
+  writeData('./talker.json', newData);
+
+  res.status(200).json(newTalker);
+  next();
+});
+
 module.exports = routes;
