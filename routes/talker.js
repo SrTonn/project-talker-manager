@@ -12,7 +12,7 @@ routes.get('/', (_req, res, next) => {
 routes.get('/:id', (req, res, next) => {
   const { id } = req.params;
 
-  const filteredId = readData().filter((data) => data.id === +id).at(0);
+  const filteredId = readData().filter((data) => data.id === +id)[0];
   if (!filteredId) {
     res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
   }
