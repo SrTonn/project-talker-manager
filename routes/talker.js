@@ -1,8 +1,8 @@
 const express = require('express');
+const { authToken, validationTalker } = require('../middlewares');
 
 const routes = express.Router();
-// const middlewares = require('../middlewares');
-const { readData } = require('../utils');
+const { readData, writeData } = require('../utils');
 
 routes.get('/', (_req, res, next) => {
   res.status(200).json(readData());
@@ -18,6 +18,19 @@ routes.get('/:id', (req, res, next) => {
   }
 
   res.status(200).json(filteredId);
+  next();
+});
+
+routes.post('/', authToken, validationTalker, (req, res, next) => {
+  const { body: newTalker } = req;
+  const data = readData();
+
+  newTalker.id = data.length + 1;
+  data.push(newTalker);
+
+  writeData('./talker.json', data);
+
+  res.status(201).json(newTalker);
   next();
 });
 
