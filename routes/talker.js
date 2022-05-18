@@ -65,7 +65,7 @@ routes.delete('/:id', authToken, async (req, res) => {
   const newData = data.filter((talker) =>
     talker.id !== +id || talker.name === name);
 
-  writeData('./talker.json', newData);
+  await writeData('./talker.json', newData);
 
   res.status(204).end();
 });
