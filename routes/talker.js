@@ -58,4 +58,16 @@ routes.put('/:id', authToken, validationTalker, (req, res, next) => {
   next();
 });
 
+routes.delete('/:id', authToken, async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  const data = await readData();
+  const newData = data.filter((talker) =>
+    talker.id !== +id || talker.name === name);
+
+  writeData('./talker.json', newData);
+
+  res.status(204).end();
+});
+
 module.exports = routes;
