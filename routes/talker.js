@@ -33,7 +33,7 @@ routes.post('/', authToken, validationTalker, (req, res, next) => {
   const { body: newTalker } = req;
   const data = readData();
 
-  newTalker.id = data.length + 1;
+  newTalker.id = (data.length && Math.max(...data.map(({ id }) => id))) + 1;
   data.push(newTalker);
 
   writeData('./talker.json', data);
